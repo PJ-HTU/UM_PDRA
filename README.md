@@ -111,70 +111,55 @@ python test_n100.py --model_path ./checkpoints/um_best.pth --augmentation 8
 ## Repository Structure
 ```
 UM_PDRA/
-├── AEDM/                     # Core code directory (implements all model & task logic)
-│   ├── PDRA/                 # Post-disaster Road Assessment (PDRA) task module
-│   │   ├── POMO/             # Policy Optimization with Multiple Optima (POMO) implementation
-│   │   ├── PDRAEnv.py        # PDRA environment class: simulates post-disaster road network scenarios
-│   │   │   - Initializes dual networks (original road network for assessment + fully connected auxiliary network for transit)
-│   │   │   - Implements environment interaction: reset() (reset scenario), step() (execute drone action and update state), and time/battery constraint checks
-│   │   │   - Calculates road link assessment time, transit time, and information value collection
-│   │   ├── PDRAModel.py      # UM model class: defines attention-based encoder-decoder architecture
-│   │   │   - Encoder: Processes node features (coordinates, information value) and global parameters (K, p_max, Q) into high-dimensional embeddings via Transformer layers
-│   │   │   - Decoder: Sequentially generates drone routes using MHA, single-head attention (SHA), and masking (blocks infeasible actions)
-│   │   │   - Outputs route probability distributions and ensures feasible solutions
-│   │   ├── PDRATrainer.py    # Model training logic class
-│   │   │   - Loads training instances (synthetic road networks) and initializes model/optimizer
-│   │   │   - Implements POMO-based training: multi-optima sampling, EMA-Z-score reward normalization (stabilizes multi-task training)
-│   │   │   - Tracks training metrics (loss, collected information value) and saves checkpoints
-│   │   └── PDRATester.py     # Model testing logic class
-│   │       - Loads pre-trained models and test instances (synthetic/real-world road networks like Anaheim)
-│   │       - Evaluates model performance: calculates solution quality (collected information value), inference time
-│   │       - Supports 8-fold instance augmentation (coordinate flipping/swapping) to improve solution diversity
-│   └── utils/                # Auxiliary tools directory (supports core logic execution)
-│       ├── utils.py          # General utility functions
-│       │   - Log data management: LogData class to record training/testing metrics (loss, score, time) for visualization
-│       │   - Distance calculation: Computes Euclidean distance between nodes (for transit/assessment time estimation)
-│       └── log_image_style/  # Log image styling configuration
-│           └── style_PDRA_20.json # Defines visualization styles
-├── train_n100.py             # Training entry script (for 100-node synthetic instances)
-│   - Defines hyperparameters: embedding dimension (128), encoder layers (6), batch size (64), epochs (200)
-│   - Calls PDRATrainer to start training: samples synthetic instances, runs POMO training, saves checkpoints to checkpoints/
-├── test_n100.py              # Testing entry script (for 100-node instances, extendable to 1000-node)
-│   - Loads pre-trained models from checkpoints/ and test instances (synthetic or real-world like Anaheim)
-│   - Calls PDRATester to evaluate performance: outputs inference time, collected information value
-└── checkpoints/              # Pre-trained model storage directory
+├── UM/                          # Core framework directory containing all model and task logic
+│   ├── PDRA/                    # Post-Disaster Road Assessment (PDRA) task module
+│   │   ├── Unified_model/       # Implementation of the unified Transformer-based model and training pipeline
+│   │   │   ├── train_n100.py    # Primary training script for PDRA problems with ~100 nodes
+│   │   │   │                    # Configures training parameters (epochs, batch size, model hyperparameters)
+│   │   │   │                    # Initializes environment, model, and trainer; executes training loop
+│   │   │   ├── test_n100.py     # Testing and evaluation script for ~100-node PDRA instances
+│   │   │   │                    # Loads pre-trained models, runs inference, and computes performance metrics
+│   │   │   │                    # Supports data augmentation (8-fold geometric transformations) for robust testing
+│   │   │   ├── PDRAEnv.py       # PDRA environment class: manages state transitions and constraints
+│   │   │   │                    # Handles node/vehicle state tracking (load, time, visited nodes)
+│   │   │   │                    # Implements masking for invalid actions (e.g., exceeding time windows/load limits)
+│   │   │   │                    # Supports batch processing and POMO (Policy Optimization with Multiple Optima)
+│   │   │   ├── PDRAModel.py     # Unified Transformer model architecture for PDRA routing
+│   │   │   │                    # Encoder: processes node features (coordinates, demand, time windows) via multi-head attention
+│   │   │   │                    # Decoder: generates next-node predictions with state-aware attention
+│   │   │   │                    # Includes RMS normalization and SwigLU activation for stable training
+│   │   │   ├── PDRATrainer.py   # Training logic for the unified model
+│   │   │   │                    # Implements reward-based optimization with EMA-Z-score normalization
+│   │   │   │                    # Handles dynamic vehicle configuration sampling (drone count/capacity)
+│   │   │   │                    # Logs training metrics (loss, reward) and saves model checkpoints
+│   │   │   └── PDRATester.py    # Evaluation module for model performance
+│   │   │                        # Computes solution quality (collected information value, path length)
+│   │   │                        # Supports both augmented and non-augmented testing modes
+│   │   │                        # Outputs detailed route information and comparative metrics
+│   │   └── PDRAProblemDef.py    # PDRA problem definition and instance generation
+│   │                           # Creates synthetic road networks (grid-based or real-world derived)
+│   │                           # Defines constraints for different PDRA variants (TW/OR/MD)
+│   │                           # Implements data augmentation via geometric transformations
+│   └── utils/                   # Utility functions and helper modules
+│       ├── utils.py             # General-purpose utilities for logging, metrics, and visualization
+│       │                        # Includes LogData class for tracking training/testing metrics
+│       │                        # Provides time estimation, distance calculation, and result saving
+│       │                        # Supports log visualization (plotting loss/reward curves)
+│       └── log_image_style/     # Configuration for log visualization styling
+│           └── style_PDRA_20.json # Defines plot aesthetics (axes, colors, grids) for consistent visualization
+├── checkpoints/                 # Storage directory for trained model checkpoints
+│                               # Saves model weights, optimizer states, and training configurations
+│                               # Organized by training date/problem type for easy retrieval
+├── results/                     # Output directory for training logs and evaluation results
+│                               # Contains CSV logs of metrics (loss, reward, inference time)
+│                               # Stores visualization plots (training curves, route examples)
+│                               # Includes test result summaries (average performance, best paths)
+├── Model Architecture.pdf       # Documentation of the unified model's architecture
+│                               # Details encoder/decoder design, attention mechanisms, and state integration
+│                               # Includes flowcharts of environment-model interaction
+├── README.md                    # Repository overview, usage instructions, and documentation
+└── requirements.txt             # List of dependencies (PyTorch, NumPy, NetworkX, Matplotlib)
 ```
-
-## Experimental Results
-
-### Performance on Synthetic Networks
-
-Comprehensive experiments on 200-node and 400-node networks demonstrate:
-
-- **Solution Quality**: UM consistently achieves the highest objective values across all PDRA variants
-- **Computational Efficiency**: Generates valid solutions within 1-2 seconds (vs. 30 minutes for commercial solvers)
-- **Robustness**: Maintains stable performance under varying time limits, drone fleet sizes, and network scales
-
-### Validation on Real-World Networks
-
-Validation on the Anaheim transportation network (1,330 nodes) confirms practical scalability:
-- Maintains superior solution quality
-- Rapid inference performance (~24 seconds for all 8 variants)
-- Successfully handles irregular topology of real-world road networks
-
-### Sensitivity Analysis
-
-Extensive sensitivity analyses across three dimensions validate model robustness:
-- **Time Constraints**: Performance gaps of −0.20% to 16.07% over best single-task AEDM across varying assessment time limits (20-50 minutes)
-- **Fleet Size**: Consistent superiority with 1.20%–12.79% performance gaps across 4-10 drones
-- **Network Scale**: Strong scalability with 0.17%–11.65% performance gaps on networks from 400-1,000 nodes
-
-### Finetuning Results
-
-Lightweight adapter mechanism enables efficient incorporation of unseen attributes (Multi-Depot):
-- **UM-10-Epochs** (10 epochs finetuning) achieves higher solution quality than single-task AEDMs trained from scratch (200 epochs each)
-- Demonstrates effective knowledge transfer with minimal computational cost
-- Validates adaptability to evolving disaster response requirements
 
 ## Citation
 
@@ -192,16 +177,3 @@ If you use this code or model in your research, please cite the paper:
 
 💡 Our code builds on [POMO](https://github.com/yd-kwon/POMO). Big thanks!
 
-## License
-
-[License information to be added]
-
-## Contact
-
-For questions or suggestions, please:
-- Submit a GitHub Issue
-- [Contact email to be added]
-
----
-
-**Note**: This repository is under active development. More features and documentation will be continuously updated.

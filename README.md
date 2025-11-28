@@ -175,5 +175,5 @@ If you use this code or model in your research, please cite the paper:
 
 ## Acknowledgements
 
-💡 Our code builds on [POMO](https://github.com/yd-kwon/POMO), [AEDM]([https://github.com/yd-kwon/POMO](https://github.com/PJ-HTU/AEDM-for-Post-disaster-road-assessment). Big thanks!
+💡 Our code builds on [POMO](https://github.com/yd-kwon/POMO), [AEDM](https://github.com/PJ-HTU/AEDM-for-Post-disaster-road-assessment). Big thanks!
 

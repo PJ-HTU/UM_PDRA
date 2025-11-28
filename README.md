@@ -8,11 +8,10 @@ Given a road network affected by disaster, deploy a fleet of drones to:
 - Maximize collected damage information across the road network
 - Complete assessment within time constraints
 - Respect battery flight time limits
-- Determine optimal routes for multiple drones
 
 ## Model Architecture
 
-![UM Architecture](https://raw.githubusercontent.com/PJ-HTU/UM_PDRA/main/Model%20Architecture.jpg)
+![UM Architecture](https://raw.githubusercontent.com/PJ-HTU/UM_PDRA/main/Model%20Architecture.pdf)
 
 The model processes road network coordinates, drone parameters, and constraints through:
 - **Encoder**: Embeds node features and global parameters (drone count, time limits) via multi-head attention layers with modern Transformer components (RMS normalization, FlashAttention, SGLUFFN).

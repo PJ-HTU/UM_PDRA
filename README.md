@@ -96,7 +96,6 @@ python train_n100.py --epochs 200 --batch_size 64 --embedding_dim 128
 - `epochs`: Number of training epochs (default: 200)
 - `batch_size`: Batch size (default: 64)
 - `embedding_dim`: Embedding dimension (default: 128)
-- Training time: ~24 hours (on NVIDIA A100 GPU)
 
 ### Testing
 ```bash

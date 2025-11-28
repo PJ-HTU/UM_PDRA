@@ -9,24 +9,6 @@ Given a road network affected by disaster, deploy a fleet of drones to:
 - Complete assessment within time constraints
 - Respect battery flight time limits
 
-## Model Architecture
-
-![UM Architecture](https://raw.githubusercontent.com/PJ-HTU/UM_PDRA/main/Model%20Architecture.jpg)
-
-The model processes road network coordinates, drone parameters, and constraints through:
-- **Encoder**: Embeds node features and global parameters (drone count, time limits) via multi-head attention layers with modern Transformer components (RMS normalization, FlashAttention, SGLUFFN).
-- **Decoder**: Sequentially constructs feasible routes with masking mechanisms to enforce time/battery constraints and avoid redundant assessments.
-
-## Key Features
-
-- **Rapid Performance**: 1-10 seconds inference time vs. 100-2,000 seconds for traditional methods
-- **Superior Solution Quality**: Outperforms commercial solvers (Gurobi) and traditional heuristics
-- **No Domain Expertise Required**: Eliminates need for hand-crafted algorithms through end-to-end learning
-- **Strong Generalization**: Robust performance across varying problem scales, drone numbers, and time constraints
-- **Multi-task Learning**: Handles diverse parameter combinations in a unified framework
-- **8× Efficiency**: Consolidates 8 PDRA variants in one model, reducing training time and parameters by 8-fold
-- **Adaptive to New Attributes**: Lightweight adapter mechanism enables efficient incorporation of unseen attributes (e.g., multi-depot settings) without full retraining
-
 ## Problem Variants
 
 The model supports 8 PDRA variants through attribute combinations:
@@ -46,6 +28,26 @@ The model supports 8 PDRA variants through attribute combinations:
 - **OR (Open Route)**: Drones do not need to return to depot, can land at any feasible location
 - **TW (Time Window)**: Critical road segments must be assessed before specified deadlines
 - **MD (Multi-Depot)**: Drones can launch from multiple depot locations
+
+## Model Architecture
+
+![UM Architecture](https://raw.githubusercontent.com/PJ-HTU/UM_PDRA/main/Model%20Architecture.jpg)
+
+The model processes road network coordinates, drone parameters, and constraints through:
+- **Encoder**: Embeds node features and global parameters (drone count, time limits) via multi-head attention layers with modern Transformer components (RMS normalization, FlashAttention, SGLUFFN).
+- **Decoder**: Sequentially constructs feasible routes with masking mechanisms to enforce time/battery constraints and avoid redundant assessments.
+
+## Key Features
+
+- **Rapid Performance**: 1-10 seconds inference time vs. 100-2,000 seconds for traditional methods
+- **Superior Solution Quality**: Outperforms commercial solvers (Gurobi) and traditional heuristics
+- **No Domain Expertise Required**: Eliminates need for hand-crafted algorithms through end-to-end learning
+- **Strong Generalization**: Robust performance across varying problem scales, drone numbers, and time constraints
+- **Multi-task Learning**: Handles diverse parameter combinations in a unified framework
+- **8× Efficiency**: Consolidates 8 PDRA variants in one model, reducing training time and parameters by 8-fold
+- **Adaptive to New Attributes**: Lightweight adapter mechanism enables efficient incorporation of unseen attributes (e.g., multi-depot settings) without full retraining
+
+
 
 ## Technical Highlights
 

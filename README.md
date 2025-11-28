@@ -14,7 +14,7 @@ Given a road network affected by disaster, deploy a fleet of drones to:
 The problem can be extended to 8 PDRA variants through attribute combinations:
 
 | Variant | Open Route (OR) | Time Window (TW) | Multi-Depot (MD) |
-|---------|----------------|------------------|------------------|
+|:-------:|:--------------:|:----------------:|:----------------:|
 | PDRA-Basic |   |   |   |
 | PDRA-OR | ✓ |   |   |
 | PDRA-TW |   | ✓ |   |

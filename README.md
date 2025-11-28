@@ -11,7 +11,7 @@ Given a road network affected by disaster, deploy a fleet of drones to:
 
 ## Model Architecture
 
-![UM Architecture](https://raw.githubusercontent.com/PJ-HTU/UM_PDRA/main/Model%20Architecture.jgp)
+![UM Architecture](https://raw.githubusercontent.com/PJ-HTU/UM_PDRA/main/Model%20Architecture.jpg)
 
 The model processes road network coordinates, drone parameters, and constraints through:
 - **Encoder**: Embeds node features and global parameters (drone count, time limits) via multi-head attention layers with modern Transformer components (RMS normalization, FlashAttention, SGLUFFN).

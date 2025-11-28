@@ -168,12 +168,12 @@ If you use this code or model in your research, please cite the paper:
 @article{gong2025unified,
   title={A Unified Model for Multi-Task Drone Routing in Post-Disaster Road Assessment},
   author={Gong, Huatian and Sheu, Jiuh-Biing and Wang, Zheng and Yang, Xiaoguang and Yan, Ran},
-  journal={[Journal TBD]},
+  journal={arXiv preprint arXiv:2510.21525},
   year={2025}
 }
 ```
 
 ## Acknowledgements
 
-💡 Our code builds on [POMO](https://github.com/yd-kwon/POMO). Big thanks!
+💡 Our code builds on [POMO](https://github.com/yd-kwon/POMO), [AEDM]([https://github.com/yd-kwon/POMO](https://github.com/PJ-HTU/AEDM-for-Post-disaster-road-assessment). Big thanks!
 

@@ -11,7 +11,7 @@ Given a road network affected by disaster, deploy a fleet of drones to:
 
 ## Problem Variants
 
-The model supports 8 PDRA variants through attribute combinations:
+The problem can 延伸出 8 PDRA variants through attribute combinations:
 
 | Variant | Open Route (OR) | Time Window (TW) | Multi-Depot (MD) |
 |---------|----------------|------------------|------------------|
@@ -33,9 +33,7 @@ The model supports 8 PDRA variants through attribute combinations:
 
 ![UM Architecture](https://raw.githubusercontent.com/PJ-HTU/UM_PDRA/main/Model%20Architecture.jpg)
 
-The model processes road network coordinates, drone parameters, and constraints through:
-- **Encoder**: Embeds node features and global parameters (drone count, time limits) via multi-head attention layers with modern Transformer components (RMS normalization, FlashAttention, SGLUFFN).
-- **Decoder**: Sequentially constructs feasible routes with masking mechanisms to enforce time/battery constraints and avoid redundant assessments.
+The unified model processes road network data, problem parameters, and variant attributes through five main components: (1) Input layer embeds node features and problem configurations, distinguishing road network nodes and depot nodes; (2) Encoder transforms embeddings into high-level contextual representations using modern transformer layers with RMS normalization, FlashAttention, and SGLUFFN; (3) Decoder constructs solutions autoregressively through probability computation, softmax selection, and single-head attention mechanisms; (4) Update module maintains solution feasibility by managing infeasible action masks, active drone indices, and current time states; (5) Output produces feasible multi-drone routes satisfying variant-specific constraints with appropriate termination conditions.
 
 ## Key Features
 

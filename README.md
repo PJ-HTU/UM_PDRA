@@ -50,8 +50,6 @@ The unified model processes road network data, problem parameters, and variant a
 - **8× Efficiency**: Consolidates 8 PDRA variants in one model, reducing training time and parameters by 8-fold
 - **Adaptive to New Attributes**: Lightweight adapter mechanism enables efficient incorporation of unseen attributes (e.g., multi-depot settings) without full retraining
 
-
-
 ## Technical Highlights
 
 ### Key Innovations
@@ -67,14 +65,6 @@ The unified model processes road network data, problem parameters, and variant a
 5. **Modern Transformer Architecture**: Incorporates RMS normalization, pre-normalization configuration, FlashAttention, and SGLUFFN for enhanced computational efficiency and solution quality.
 
 6. **Lightweight Finetuning**: Adapter mechanism enables efficient incorporation of new attributes (e.g., multi-depot) with minimal computational cost while preserving pre-trained knowledge.
-
-## Performance Advantages
-
-Compared to existing methods, UM achieves significant improvements:
-- **vs. Single-task DRL**: 6-14% better solution quality
-- **vs. Heuristic Algorithms**: 22-42% better solution quality
-- **vs. Commercial Solvers**: 24-82% better solution quality
-- **Computational Efficiency**: 1-10 seconds inference time for networks up to 1,000 nodes
 
 ## Quick Start
 

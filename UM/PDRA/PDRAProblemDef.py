@@ -3,7 +3,7 @@ import numpy as np
 import random
 import networkx as nx
 
-###################################################################################################
+##################################################################################################
 # If problem_type = 'unified': trained on 33% drone_l, 33% drone_ltw, 33% drone_lo
 # problem_type can be drone_l, drone_ltw, drone_lo and their any combinations, e.g., drone_ltwo
 # Where drone_l is for PDRA-Basic, drone_o is for PDRA-OR, drone_tw is for PDRA-TW in this paper
@@ -15,7 +15,7 @@ def get_random_problems(batch_size, problem_size, original_node_count, link_coun
     node_xy = train_s[:, 1:, :]
     node_demand = train_d[:, 1:, :].squeeze()
 
-###################################################################################################
+##################################################################################################
     node_serviceTime = torch.zeros(size=(batch_size, problem_size))
     # shape: (batch, problem)
 

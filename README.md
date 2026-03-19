@@ -172,8 +172,6 @@ If you use this code or model in your research, please cite the paper:
 }
 ```
 
-
-
 ## Acknowledgements
 
 💡 Our code builds on [POMO](https://github.com/yd-kwon/POMO), [AEDM](https://github.com/PJ-HTU/AEDM-for-Post-disaster-road-assessment), [routefinder](https://github.com/ai4co/routefinder). Big thanks!
